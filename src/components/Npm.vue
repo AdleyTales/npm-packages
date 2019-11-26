@@ -54,8 +54,9 @@ export default {
         this.isApiError = false
         this.loading = true
 
-        const result = await this.$axios.get(`https://adleytales.github.io/api/npm-packages/npm.json`)
-        this.tableData = result
+        const { data } = await this.$axios.get(`https://adleytales.github.io/api/npm-packages/npm.json`)
+        this.tableData = data
+        this.loading = false
       } catch (e) {
         this.loading = false
         this.isApiError = true
