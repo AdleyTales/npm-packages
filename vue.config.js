@@ -9,9 +9,9 @@ module.exports = {
    * 开发环境的配置，代理，只是针对接口Api层面
    */
   devServer: {
-    open: true, // 自动打开浏览器
+    open: true // 自动打开浏览器
 
     // 接口代理
-    proxy: {}
+    // proxy: {}
   }
 }

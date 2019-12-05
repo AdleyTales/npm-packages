@@ -1,12 +1,19 @@
 <template>
   <div class="npm-packages-container">
+    <!-- 异常的提示信息 -->
     <el-alert v-if="isApiError" title="api数据接口异常" type="error" description="为了更好的给大家提供服务，请及时发送邮件 `adleytales@126.com` 通知UP主！" show-icon>
     </el-alert>
 
     <!-- title -->
-    <h3 class="title">
-      npm packages
-    </h3>
+    <h3 class="title">npm packages</h3>
+
+    <!-- tabs -->
+    <div class="tabs-wrapper">
+      <el-radio-group v-model="type" size="small">
+        <el-radio-button label="frontend">前端</el-radio-button>
+        <el-radio-button label="backend">Nodejs后端</el-radio-button>
+      </el-radio-group>
+    </div>
 
     <!-- table -->
     <el-table :data="tableData" stripe border style="width: 100%" v-loading="loading">
@@ -35,6 +42,8 @@ export default {
 
       loading: false,
 
+      type: 'frontend',
+
       tableData: []
     }
   },
@@ -54,13 +63,19 @@ export default {
         this.isApiError = false
         this.loading = true
 
-        const { data } = await this.$axios.get(`https://adleytales.github.io/api/npm-packages/npm.json`)
+        const { data } = await this.$axios.get(`https://adleytales.github.io/api/npm-packages/${this.type}.json`)
         this.tableData = data
         this.loading = false
       } catch (e) {
         this.loading = false
         this.isApiError = true
       }
+    }
+  },
+
+  watch: {
+    type () {
+      this.init()
     }
   }
 }
@@ -72,8 +87,14 @@ export default {
   max-width: 1280px;
 
   .title {
-    padding: 15px 0;
+    padding: 15px 0 0 0;
     text-align: center;
+    margin: 0;
+  }
+
+  .tabs-wrapper {
+    text-align: center;
+    padding: 15px 0;
   }
 }
 </style>
